@@ -44,8 +44,8 @@ body:
 - type: textarea
   id: description_3
   attributes:
-    label: Video link
+    label: Related links
     description:
-    placeholder: Please provide a link to the feed or article where this feature might be beneficial.
+    placeholder: Please provide links to the feed or article where this feature might be beneficial.
   validations:
     required: false
