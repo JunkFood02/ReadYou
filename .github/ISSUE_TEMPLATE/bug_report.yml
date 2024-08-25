@@ -12,7 +12,7 @@ body:
         required: true
       - label: I've already searched in [exising issues](https://github.com/Ashinch/ReadYou/issues?q=is%3Aissue+) and haven't found a similar problem reported.
         required: true
-      - label: This error is consistently reproducible with the same action, feed or article.
+      - label: This error can be reproduced with the same action, feed or article.
 
 body:
 - type: input
@@ -26,7 +26,7 @@ body:
   id: repro
   attributes:
     label: Reproduction steps
-    description: "How can we recreate this bug? Please specify the account type (local, Google Reader, etc.) and, if applicable, the link to the relevant feed or article."
+    description: "How can we reproduce this bug? Please specify the account type (local, Google Reader, etc.) and, if applicable, the link to the relevant feed or article."
     value: |
       1. 
       2.
