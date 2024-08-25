@@ -14,7 +14,6 @@ body:
         required: true
       - label: This error can be reproduced with the same action, feed or article.
 
-body:
 - type: input
   id: version
   attributes:
