@@ -17,11 +17,6 @@ body:
   attributes:
     label: Error report
     description: "An error report page should appear after the app crashing. Please copy and paste the report here."
-    value: |
-      1.
-      2.
-      3.
-      ...
     render: bash
   validations:
     required: true
