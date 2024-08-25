@@ -19,8 +19,11 @@ body:
 
 - type: checkboxes
   id: reproducible
+  label: Checklist
   attributes:
     options:
+      - label: This error causes the app to crash.
+        required: true
       - label: This error is consistently reproducible with the same action, feed or article.
 
       
