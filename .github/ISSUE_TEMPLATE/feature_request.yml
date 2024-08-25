@@ -2,13 +2,14 @@ name: Feature Request
 description: Suggest a new feature for the app
 labels: [ enhancement, untriaged ]
 body:
+
 - type: checkboxes
-  id: checklist
-  attributes:
-    label: Checklist
-    options:
-      - label: I've already searched in [exising issues](https://github.com/Ashinch/ReadYou/issues?q=is%3Aissue+) and haven't found a similar feature request.
-        required: true
+id: checklist
+attributes:
+  label: Checklist
+  options:
+    - label: I've already searched in [exising issues](https://github.com/Ashinch/ReadYou/issues?q=is%3Aissue+) and haven't found a similar feature request.
+      required: true
 
   
 - type: dropdown
