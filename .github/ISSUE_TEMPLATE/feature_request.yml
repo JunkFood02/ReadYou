@@ -4,25 +4,25 @@ labels: [ enhancement, untriaged ]
 body:
 
 - type: checkboxes
-id: checklist
-attributes:
-  label: Checklist
-  options:
-    - label: I've already searched in [exising issues](https://github.com/Ashinch/ReadYou/issues?q=is%3Aissue+) and haven't found a similar feature request.
-      required: true
+  id: checklist
+  attributes:
+    label: Checklist
+    options:
+      - label: I've already searched in [exising issues](https://github.com/Ashinch/ReadYou/issues?q=is%3Aissue+) and haven't found a similar feature request.
+        required: true
 
   
 - type: dropdown
-id: types
-attributes:
-  label: Which category best fits this feature request?
-  options:
-    - Feed Sync & Management
-    - User Interface
-    - New API Integration
-    - Others
-validations:
-  required: true
+  id: types
+  attributes:
+    label: Which category best fits this feature request?
+    options:
+      - Feed Sync & Management
+      - User Interface
+      - New API Integration
+      - Others
+  validations:
+    required: true
 
 
 - type: textarea
