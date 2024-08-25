@@ -13,6 +13,18 @@ body:
       - label: I've already searched in [exising issues](https://github.com/Ashinch/ReadYou/issues?q=is%3Aissue+) and haven't found a similar problem reported.
         required: true
       - label: This error can be reproduced with the same action, feed or article.
+  
+- type: dropdown
+  id: types
+  attributes:
+    label: Which category best fits this feature request?
+    options:
+      - Feed Sync
+      - Feed Management
+      - User Interface
+      - Others
+  validations:
+    required: true
 
 - type: input
   id: version
