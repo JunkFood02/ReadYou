@@ -19,8 +19,8 @@ body:
 
 - type: checkboxes
   id: reproducible
-  label: Checklist
   attributes:
+    label: Checklist
     options:
       - label: This error causes the app to crash.
         required: true
