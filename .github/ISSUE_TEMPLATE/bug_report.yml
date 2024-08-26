@@ -17,7 +17,7 @@ body:
 - type: dropdown
   id: types
   attributes:
-    label: Which category best fits this feature request?
+    label: Which category best fits this error?
     options:
       - Feed Sync
       - Feed Management
