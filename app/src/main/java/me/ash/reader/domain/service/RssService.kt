@@ -18,6 +18,7 @@ class RssService @Inject constructor(
     private val localRssService: LocalRssService,
     private val feverRssService: FeverRssService,
     private val googleReaderRssService: GoogleReaderRssService,
+    private val nextcloudNewsRssService: NextcloudNewsRssService, // Added NextcloudNewsRssService
 ) {
 
     private val currentServiceFlow =
@@ -34,9 +35,10 @@ class RssService @Inject constructor(
         AccountType.Local.id -> localRssService
         AccountType.Fever.id -> feverRssService
         AccountType.GoogleReader.id -> googleReaderRssService
-        AccountType.FreshRSS.id -> googleReaderRssService
-        AccountType.Inoreader.id -> localRssService
-        AccountType.Feedly.id -> localRssService
+        AccountType.FreshRSS.id -> googleReaderRssService // Assuming FreshRSS still uses GoogleReader API compatible service
+        AccountType.Inoreader.id -> localRssService // Placeholder, Inoreader might need its own service
+        AccountType.Feedly.id -> localRssService // Placeholder, Feedly might need its own service
+        AccountType.NextcloudNews.id -> nextcloudNewsRssService // Added NextcloudNews
         else -> localRssService
     }
 }
