@@ -45,10 +45,14 @@ class RssHelper @Inject constructor(
     @Throws(Exception::class)
     suspend fun searchFeed(feedLink: String): SyndFeed {
         return withContext(ioDispatcher) {
-            SyndFeedInput().build(XmlReader(inputStream(okHttpClient, feedLink))).also {
-                it.icon = SyndImageImpl()
-                it.icon.link = queryRssIconLink(feedLink)
-                it.icon.url = it.icon.link
+            val response = response(okHttpClient, feedLink)
+            val contentType = response.header("Content-Type")
+            response.body.byteStream().use { inputStream ->
+                SyndFeedInput().build(XmlReader(inputStream, contentType)).also {
+                    it.icon = SyndImageImpl()
+                    it.icon.link = queryRssIconLink(feedLink)
+                    it.icon.url = it.icon.link
+                }
             }
         }
     }
@@ -58,7 +62,11 @@ class RssHelper @Inject constructor(
         return withContext(ioDispatcher) {
             val response = response(okHttpClient, link)
             if (response.commonIsSuccessful) {
-                val content = response.body.string()
+                val responseBody = response.body
+                val contentType = responseBody.contentType()
+                val charset = contentType?.charset(Charsets.UTF_8) ?: Charsets.UTF_8
+
+                val content = responseBody.source().use { it.readString(charset) }
                 val articleContent = Readability.parseToElement(content, link)
                 articleContent?.run {
                     val h1Element = articleContent.selectFirst("h1")
@@ -78,9 +86,11 @@ class RssHelper @Inject constructor(
     ): List<Article> =
         try {
             val accountId = context.currentAccountId
-            inputStream(okHttpClient, feed.url).use {
+            val response = response(okHttpClient, feed.url)
+            val contentType = response.header("Content-Type")
+            response.body.byteStream().use { inputStream ->
                 SyndFeedInput().apply { isPreserveWireFeed = true }
-                    .build(XmlReader(it))
+                    .build(XmlReader(inputStream, contentType))
                     .entries
                     .asSequence()
                     .takeWhile { latestLink == null || latestLink != it.link }
@@ -168,13 +178,10 @@ class RssHelper @Inject constructor(
         )
     }
 
-    private suspend fun inputStream(
-        client: OkHttpClient,
-        url: String,
-    ): InputStream = response(client, url).body.byteStream()
+    // Removed inputStream function as its logic is now integrated into calling sites or covered by `response()`
 
     private suspend fun response(
         client: OkHttpClient,
         url: String,
-    ) = client.newCall(Request.Builder().url(url).build()).executeAsync()
+    ): okhttp3.Response = client.newCall(Request.Builder().url(url).build()).executeAsync()
 }
