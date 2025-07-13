@@ -14,7 +14,6 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.util.Consumer
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.navigation.compose.rememberNavController
 import androidx.profileinstaller.ProfileInstallerInitializer
 import coil.ImageLoader
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,10 +26,6 @@ import me.ash.reader.infrastructure.preference.LanguagesPreference
 import me.ash.reader.infrastructure.preference.LocalDarkTheme
 import me.ash.reader.infrastructure.preference.SettingsProvider
 import me.ash.reader.ui.ext.languages
-import me.ash.reader.ui.page.common.ExtraName
-import me.ash.reader.ui.page.common.HomeEntry
-import me.ash.reader.ui.page.common.RouteName
-import me.ash.reader.ui.page.home.feeds.subscribe.SubscribeViewModel
 import me.ash.reader.ui.page.nav3.AppEntry
 import me.ash.reader.ui.theme.AppTheme
 
@@ -81,16 +76,10 @@ class MainActivity : AppCompatActivity() {
             AccountSettingsProvider(accountService = accountService) {
                 settingsProvider.ProvidesSettings {
                     val subscribeViewModel: SubscribeViewModel = hiltViewModel()
-                    val navController = rememberNavController()
-
                     ProvideCompositionLocals {
                         AppTheme(useDarkTheme = LocalDarkTheme.current.isDarkTheme()) {
                             AppEntry()
                         }
-//                        HomeEntry(
-//                            subscribeViewModel = subscribeViewModel,
-//                            navController = navController,
-//                        )
                     }
 
                     DisposableEffect(this) {
@@ -99,23 +88,12 @@ class MainActivity : AppCompatActivity() {
                                 intent.getLaunchAction()?.let { action ->
                                     when (action) {
                                         is LaunchAction.OpenArticle -> {
-                                            navController.navigate(
-                                                "${RouteName.READING}/${action.articleId}"
-                                            ) {
-                                                launchSingleTop = true
-                                            }
+                                            // TODO
                                         }
 
                                         is LaunchAction.Subscribe -> {
                                             subscribeViewModel.handleSharedUrlFromIntent(action.url)
-                                            val res =
-                                                navController.popBackStack(
-                                                    route = RouteName.FEEDS,
-                                                    inclusive = false,
-                                                    saveState = true,
-                                                )
-                                            if (!res)
-                                                navController.navigate(route = RouteName.FEEDS)
+                                            // TODO
                                         }
                                     }
                                 }
@@ -126,32 +104,6 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
-        }
-    }
-}
-
-sealed interface LaunchAction {
-    data class Subscribe(val url: String) : LaunchAction
-
-    data class OpenArticle(val articleId: String) : LaunchAction
-}
-
-private fun Intent.getLaunchAction(): LaunchAction? {
-    return when (action) {
-        Intent.ACTION_VIEW -> {
-            dataString?.let { LaunchAction.Subscribe(it) }
-        }
-
-        Intent.ACTION_SEND -> {
-            getStringExtra(Intent.EXTRA_TEXT)
-                ?.also { removeExtra(Intent.EXTRA_TEXT) }
-                ?.let { LaunchAction.Subscribe(it) }
-        }
-
-        else -> {
-            getStringExtra(ExtraName.ARTICLE_ID)
-                ?.also { removeExtra(ExtraName.ARTICLE_ID) }
-                ?.let { LaunchAction.OpenArticle(it) }
         }
     }
 }
