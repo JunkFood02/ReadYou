@@ -58,12 +58,7 @@ fun GroupOptionDrawer(
         drawerState = drawerState,
         onDismiss = onDismiss,
         sheetContent = {
-            Column(
-                modifier =
-                    Modifier.navigationBarsPadding()
-                        .padding(horizontal = 24.dp)
-                        .padding(bottom = 16.dp)
-            ) {
+            Column(modifier = Modifier.padding(horizontal = 24.dp).padding(bottom = 16.dp)) {
                 Column(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally,

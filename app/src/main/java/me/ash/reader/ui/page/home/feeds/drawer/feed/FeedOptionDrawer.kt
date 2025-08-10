@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.CreateNewFolder
@@ -64,7 +63,7 @@ fun FeedOptionDrawer(
         drawerState = drawerState,
         onDismiss = onDismiss,
         sheetContent = {
-            Column(modifier = Modifier.navigationBarsPadding().padding(horizontal = 24.dp)) {
+            Column(modifier = Modifier.padding(horizontal = 24.dp)) {
                 Column(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally,
